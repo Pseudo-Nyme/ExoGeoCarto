@@ -45,9 +45,9 @@
             ry = event.acceleration.y;
             rz = event.acceleration.z;
             
-            ax = event.rotationRate.x;
-            ay = event.rotationRate.y;
-            az = event.rotationRate.z;
+            ax = event.rotationRate.alpha;
+            ay = event.rotationRate.beta;
+            az = event.rotationRate.gamma;
             
             $("#rot").text("[" + rx + "," +ry +"," +rz + "]");
             $("#acc").text("[" + ax + "," +ay +"," +az + "]");
