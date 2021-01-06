@@ -31,27 +31,9 @@
     document.addEventListener("touchmove", touche, false);
     
     function touche(event) {
-        $("#x").text(event.changedTouches.pageX);
-        $("#y").text(event.changedTouches.pageY);
+        $("#x").text(event.changedTouches[0].pageX);
+        $("#y").text(event.changedTouches[0].pageY);
         $("#typ").text(event.type);
     }
-    
-    navigator.geolocation.getCurrentPosition(function(pos) {
-        let crd = pos.coords;
-        $("#lon").text(crd.latitude);
-        $("#lat").text(crd.longitude);
-        $("#pre").text(crd.accuracy);
-        $("#vit").text(crd.speed);
-        $("#tim").text(pos.timestamp);
-    });
-    
-    wp = navigator.geolocation.watchPosition(function(pos) {
-        let crd = pos.coords;
-        $("#lon").text(crd.latitude);
-        $("#lat").text(crd.longitude);
-        $("#pre").text(crd.accuracy);
-        $("#vit").text(crd.speed);
-        $("#tim").text(pos.timestamp);
-    });
 </script>
 </html>
