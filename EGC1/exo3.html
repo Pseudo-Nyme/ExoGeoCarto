@@ -38,8 +38,19 @@
     
     if (window.DeviceMotionEvent) {
         window.addEventListener('devicemotion', function(event) {
-            $("#rot").text(event.rotationRate);
-            $("#acc").text(event.acceleration);
+            let rx,ry,rz;
+            let ax,ay,az;
+            
+            rx = event.acceleration.x;
+            ry = event.acceleration.y;
+            rz = event.acceleration.z;
+            
+            ax = event.rotationRate.x;
+            ay = event.rotationRate.y;
+            az = event.rotationRate.z;
+            
+            $("#rot").text("[${rx},${ry},${rz}]");
+            $("#acc").text("[${ax},${ay},${az}]");
         });
     }
 </script>
