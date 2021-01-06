@@ -29,13 +29,18 @@
       window.addEventListener('deviceorientation', function(event) {
         $("#x").text(event.X);
         $("#y").text(event.Y);
-        $("#z").text(event.Z);
+        $(0"#z").text(event.Z);
         $("#alpha").text(event.alpha);
         $("#beta").text(event.beta);
         $("#gamma").text(event.gamma);
-        $("#rot").text(event.rotationRate);
-        $("#acc").text(event.acceleration);
       });
+    }
+    
+    if (window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion', function(event) {
+            $("#rot").text(event.rotationRate);
+            $("#acc").text(event.acceleration);
+        });
     }
 </script>
 </html>
