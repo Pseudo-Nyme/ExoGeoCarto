@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TP2 Exo1</title>
+        <meta charset="utf-8">
+
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+        <style type="text/css">
+            #map{ 
+                /* set taille carte sinon apparaît pas */
+                height:400px;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>TP2 Exo1</h1>
+        <p>Position : Lon <b id="lon"></b>, Lat <b id="lat"></b></p>
+        <p>Précision : <b id="pre"></b></p>
+        <p>Vitesse : <b id="vit"></b></p>
+        <p>Timestamp : <b id="tim"></b></p>
+        
+        <div id="map">
+        
+        </div>
+        
+        <!-- Leaflet -->
+        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+        
+        <script>
+            $(document).ready(function() {
+               //Récupérer info GPS
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    let crd = pos.coords;
+                    $("#lon").text(crd.latitude);
+                    $("#lat").text(crd.longitude);
+                    $("#pre").text(crd.accuracy);
+                    $("#vit").text(crd.speed);
+                    $("#tim").text(pos.timestamp);
+                });
+                
+                //créa map
+                //centre map sur nice
+                let lat = 43.700000;
+                let lon = 7.250000;
+                let zeMap = null;
+                
+                //créa objet dans div map
+                zeMap = L.map('map').setView([lat, lon], 11);
+                // récupérer map de serv (le fait pas de base)
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(zeMap);
+                //marker nice
+                var marker = L.marker([lat, lon]).addTo(zeMap);
+            });
+        </script>
+    </body>
+</html>
