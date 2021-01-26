@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Exo1 TP3</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<h1>Exo1 TP3</h1>
+    <section>
+        <h2>1.1 : Canvas</h2>
+        <div>
+            <canvas id="canvas" width="500" height="300"></canvas>
+        </div>
+    </section>
+
+    <section>
+        <h2>1.2 : SVG</h2>
+        <div>
+            <svg width="500" height="300">
+                <rect id="ciel" x="0" y="0" width="500" height="200" class="day"/>
+                <rect x="0" y="200" width="500" height="100" style="fill:#04AB2E;"/>
+
+                <polygon points="0,200 75,50 150,200" style="fill:#E19E04;"/>
+                <polygon points="140,200 180,100 220,200" style="fill:#E19E04;"/>
+                <polygon points="205,200 280,75 355,200" style="fill:#E19E04;"/>
+                <polygon points="340,200 420,69 500,200" style="fill:#E19E04;"/>
+
+                <circle id="soleil" cx="350" cy="50" r="30" style="fill:#FFFF00;"/>
+
+                <rect x="25" y="215" width="80" height="75" style="fill:#9FFFCD"/>
+                <rect id="porte" x="40" y="245" width="35" height="45"/>
+
+                <polygon points="25,215 65,180 105,215" style="fill:#FF0000;"/>
+            </svg>
+        </div>
+    </section>
+    
+    <script>
+        let nuit = false;
+
+        $(document).ready(function() {
+            //Partie Canvas
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.src = "./scene.jpg";
+            img.onload = function() {
+                var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                var x = (canvas.width / 2) - (img.width / 2) * scale;
+                var y = (canvas.height / 2) - (img.height / 2) * scale;
+                ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+                var soleil = new Path2D();
+                soleil.arc(75, 50, 25, 0, Math.PI * 2);
+                ctx.fillStyle = '#FF0' ;
+                ctx.fill(soleil);
+
+                ctx.beginPath() ;
+                ctx.fillStyle = '#BA7806' ;
+                ctx.fillRect(150, canvas.height - 90, 75, 80) ;
+
+                ctx.beginPath() ;
+                ctx.fillStyle = '#EA9C1D' ;
+                ctx.fillRect(170, canvas.height - 45, 25, 35) ;
+
+                ctx.beginPath() ;
+                ctx.fillStyle = '#FF0000' ;
+                ctx.moveTo(150, canvas.height - 90);
+                ctx.lineTo(187.5, 175);
+                ctx.lineTo(225, canvas.height - 90);
+                ctx.fill();
+            }
+
+            //Partie SVG
+            $("#soleil").click(function() {
+                if(!nuit) 
+                {
+                    nuit = true ;
+                    document.getElementById("ciel").className.baseVal = "night" ;
+                } 
+                else 
+                {
+                    nuit = false ;
+                    document.getElementById("ciel").className.baseVal = "day" ;
+                }
+            }) ;
+        }) ;
+    </script>
+</body>
+</html>

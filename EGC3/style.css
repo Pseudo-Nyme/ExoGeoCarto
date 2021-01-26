@@ -1,0 +1,12 @@
+#porte {
+  fill: #a8702c;
+}
+#porte:hover {
+  fill: #5e3809;
+}
+.day {
+  fill: blue;
+}
+.night {
+  fill: black;
+}

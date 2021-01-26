@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Exo2 TP3</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="exo2.js"></script>
+</head>
+<body>
+    <div>
+        <h1>Exo2 TP3</h1>
+        <section id="threeJS">
+            <canvas id="canvas"></canvas>
+        </section>
+    </div>
+    
+    
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
+        camera.position.x = 0 ;
+        camera.position.y = 3 ;
+        camera.position.z = 5 ;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+        renderer.setSize(500, 500);
+
+        /*
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshNormalMaterial();
+        const cube = new THREE.Mesh( geometry, material );
+        scene.add( cube );
+
+        camera.lookAt( cube.position ); */
+
+        const loader = new THREE.ObjectLoader() ;
+        loader.load('./amy.json',
+        // onLoad callback
+        // Here the loaded data is assumed to be an object
+        function ( obj ) {
+        loader.parseGeometries(obj) ;
+        // Add the loaded object to the scene
+        // scene.add( obj );
+        },
+
+        // onProgress callback
+        function ( xhr ) {
+        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        },
+
+        // onError callback
+        function ( err ) {
+        console.error( 'An error happened' );
+        }
+        ) ;
+
+        const animate = function () {
+        //requestAnimationFrame( animate );
+
+        //  cube.rotation.x += 0.01;
+        //  cube.rotation.y += 0.01;
+
+        //  renderer.render( scene, camera );
+        };
+
+        animate();
+    </script>
+</body>
+</html>
