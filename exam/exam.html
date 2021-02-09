@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>Projet GeoCarto</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://threejs.org//examples/js/loaders/GLTFLoader.js"></script>
     <link rel="stylesheet" href="./style.css">
 
     <script type="text/javascript">
@@ -36,6 +39,37 @@
                     needleSVG.style.transform = 'rotate(' + orientation.alpha + 'deg)';
                 }) ;
             }
+            
+            //ThreeJS
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera( 25, 1, 0.1, 1000 );
+            camera.position.set(0, 0, 6) ;
+
+            const controls = new THREE.OrbitControls( camera, renderer.domElement );
+            
+            const renderer = new THREE.WebGLRenderer({ canvas: threeCanvas });
+            renderer.setSize(500, 500);
+
+            const light = new THREE.AmbientLight( 0xffffff );
+            scene.add( light );
+
+            const gltfLoader = new THREE.GLTFLoader();
+            gltfLoader.load('./Duck.gltf', function(gltf) {
+                    scene.add( gltf.scene ) ;
+                },
+                function ( xhr ) {
+                    console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+                },
+                function ( error ) {
+                    console.log( 'An error happened' );
+                }
+            );
+
+            const animate = function () {
+                requestAnimationFrame( animate );
+                renderer.render( scene, camera );
+            };
+            animate();
         });
     </script>
 </head>
@@ -49,6 +83,11 @@
     <h1>SVG</h1>
     <div id="svg">
         <img id="needle" src="./arrow.svg" />
+    </div>
+    
+    <h1>ThreeJS</h1>
+    <div>
+        <canvas id="threeCanvas" ></canvas>
     </div>
 </body>
 </html>
