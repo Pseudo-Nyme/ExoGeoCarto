@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Projet GeoCarto</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var canvas = document.getElementById('canvas') ;
+            var context = canvas.getContext('2d');
+            var compass = new Image();
+            var needle = new Image() ;
+            compass.src = './compass.png' ;
+            needle.src = './needle.png' ;
+
+            if(window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', function(orientation) {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.drawImage(compass, 0, 0);
+                    context.save();
+                    
+                    context.translate(100, 100);
+                    context.rotate(orientation.alpha * (Math.PI / 180));
+                    context.drawImage(needle, -100, -100);
+                    context.restore();
+                }) ;
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Canvas</h1>
+    <div>
+        <canvas id="canvas" width="250" height="250"></canvas>
+    </div>
+</body>
+</html>
