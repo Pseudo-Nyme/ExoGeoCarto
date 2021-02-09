@@ -1,0 +1,12 @@
+#svg {
+    background-image: url(compass.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 400px;
+    text-align: center;
+}
+
+#needle {
+    height: 400px;
+}

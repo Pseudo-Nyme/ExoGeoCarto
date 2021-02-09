@@ -4,20 +4,25 @@
     <meta charset="utf-8">
     <title>Projet GeoCarto</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./style.css">
 
     <script type="text/javascript">
         $(document).ready(function() {
 
+            //Canvas
             var canvas = document.getElementById('canvas') ;
             var context = canvas.getContext('2d');
             var compass = new Image();
             var needle = new Image() ;
             compass.src = './compass.png' ;
             needle.src = './needle.png' ;
+            
+            //SVG
+            var needleSVG = document.getElementById('needle');
 
             if(window.DeviceOrientationEvent) {
                 window.addEventListener('deviceorientation', function(orientation) {
+                    //Canvas
                     context.clearRect(0, 0, canvas.width, canvas.height);
                     context.drawImage(compass, 0, 0);
                     context.save();
@@ -26,6 +31,9 @@
                     context.rotate(orientation.alpha * (Math.PI / 180));
                     context.drawImage(needle, -100, -100);
                     context.restore();
+                    
+                    //SVG
+                    needleSVG.style.transform = 'rotate(' + orientation.alpha + 'deg)';
                 }) ;
             }
         });
@@ -36,6 +44,11 @@
     <h1>Canvas</h1>
     <div>
         <canvas id="canvas" width="250" height="250"></canvas>
+    </div>
+    
+    <h1>SVG</h1>
+    <div id="svg">
+        <img id="needle" src="./arrow.svg" />
     </div>
 </body>
 </html>
